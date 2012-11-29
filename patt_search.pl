@@ -24,7 +24,6 @@ while ($patterns[$n]) {
 	my $exp_pattern = replace_ambiguous($patterns[$n]);
 	my $rev_pattern = revdnacomp($exp_pattern);
     $patterns[$n] = $exp_pattern."|".$rev_pattern;
-    print $patterns[$n];
 	$n++;
 }
 
