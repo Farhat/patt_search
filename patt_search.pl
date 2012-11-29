@@ -7,10 +7,10 @@ use strict;
 my $sUsage = "Usage: perl $0 <input fasta filename> <patterns>";
 if (@ARGV <= 1) {die $sUsage;}
 my ($input_contig_file) = $ARGV[0];
-my @readseq_arr;    # Array containing read sequences
+my @readseq_arr;	# Array containing read sequences
 my $next_seqID;
 my $fullseq;
-my $motnum    = length(@ARGV);
+my $motnum	= length(@ARGV);
 my @patterns  = @ARGV[1, $motnum+1];
 my @patt_copy = @patterns;
 my %match_num;
@@ -45,7 +45,7 @@ while (my $seq = <FASTA>) {
 		chomp($seq);
 	}
 	if ($seq =~ /^>/) {
-		$seq =~ s/^>//;    # Removing Fasta character
+		$seq =~ s/^>//;	# Removing Fasta character
 		chomp($seq);
 		$next_seqID = $seq;
 	}
@@ -61,10 +61,10 @@ while (my $seq = <FASTA>) {
 	my $fullout = "";
 
 	while ($patterns[$n]) {
-		my $tot          = 0;
-		my $repcount     = 0;
+		my $tot	      = 0;
+		my $repcount	 = 0;
 		my $curr_pattern = $patterns[$n];
-		my $outline      = "";
+		my $outline	  = "";
 		while ($fullseq =~ m/$curr_pattern/ig) {
 			$outline .= "$-[0], ";
 			$repcount++;
@@ -78,7 +78,7 @@ while (my $seq = <FASTA>) {
 	$fullout =~ s/, $//;
 	print "{\"$id[0]\",$fullout},\n" if ($found_any);
 
-	#       print "$fullseq\n";
+	#	   print "$fullseq\n";
 	$seqID   = $next_seqID;
 	$fullseq = "";
 }
@@ -88,10 +88,10 @@ foreach my $pattern (keys %match_num) {
 }
 
 sub revdnacomp {
-	my $dna     = shift;
+	my $dna	 = shift;
 	$revcomp =~ tr/ACGTacgtN/TGCAtgca./;
-    my @elem = $revcomp =~ /((?:\[.*?\]|.)(?:\{.*?})?)/g;
-    my $rev = join '', reverse @elem;
+	my @elem = $revcomp =~ /((?:\[.*?\]|.)(?:\{.*?})?)/g;
+	my $rev = join '', reverse @elem;
 	return $rev;
 }
 
