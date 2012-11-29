@@ -89,9 +89,10 @@ foreach my $pattern (keys %match_num) {
 
 sub revdnacomp {
 	my $dna     = shift;
-	my $revcomp = reverse($dna);
-	$revcomp =~ tr/ACGTacgt[]N/TGCAtgca][./;
-	return $revcomp;
+	$revcomp =~ tr/ACGTacgtN/TGCAtgca./;
+    my @elem = $revcomp =~ /((?:\[.*?\]|.)(?:\{.*?})?)/g;
+    my $rev = join '', reverse @elem;
+	return $rev;
 }
 
 sub replace_ambiguous {
