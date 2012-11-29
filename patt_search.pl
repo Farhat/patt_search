@@ -3,6 +3,7 @@
 # General purpose pattern searcher, that produces output that can be used in mathematica directly.
 
 use strict;
+use 5.010;
 
 my $sUsage = "Usage: perl $0 <input fasta filename> <patterns>";
 if (@ARGV <= 1) {die $sUsage;}
@@ -22,7 +23,8 @@ my $n = 0;
 while ($patterns[$n]) {
 	my $exp_pattern = replace_ambiguous($patterns[$n]);
 	my $rev_pattern = revdnacomp($exp_pattern);
-	$patterns[$n] = $exp_pattern."|".$rev_pattern;
+    $patterns[$n] = $exp_pattern."|".$rev_pattern;
+    print $patterns[$n];
 	$n++;
 }
 
@@ -89,8 +91,8 @@ foreach my $pattern (keys %match_num) {
 
 sub revdnacomp {
 	my $dna	 = shift;
-	$revcomp =~ tr/ACGTacgtN/TGCAtgca./;
-	my @elem = $revcomp =~ /((?:\[.*?\]|.)(?:\{.*?})?)/g;
+	$dna =~ tr/ACGTacgtN/TGCAtgca./;
+	my @elem = $dna =~ /((?:\[.*?\]|.)(?:\{.*?})?)/g;
 	my $rev = join '', reverse @elem;
 	return $rev;
 }
